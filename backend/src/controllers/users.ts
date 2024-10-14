@@ -33,7 +33,8 @@ const createUser = (req: Request, res: Response, next: NextFunction) => {
   const {
     name, about, avatar, password, email,
   } = req.body;
-
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   bcrypt.hash(password, 10)
     .then((hash) => User.create({
       name, about, avatar, email, password: hash,

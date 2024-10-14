@@ -13,15 +13,17 @@ import cardRouter from './cards';
 import userRouter from './users';
 
 const router = Router();
-router.post('/signup', validateUserBody, createUser);
-router.post('/signin', validateAuthentication, login);
+router.post('/api/signup', validateUserBody, createUser);
+router.post('/api/signin', validateAuthentication, login);
 
 router.use(auth);
-router.use('/users', userRouter);
-router.use('/cards', cardRouter);
+router.use('/api/users', userRouter);
+router.use('/api/cards', cardRouter);
+
+
 
 router.use((req: Request, res: Response, next: NextFunction) => {
-  next(new NotFoundError('Маршрут не найден'));
+  next(new NotFoundError('Маршрут не найден'+req.url));
 });
 
 export default router;

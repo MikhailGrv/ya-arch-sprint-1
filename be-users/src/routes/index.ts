@@ -9,7 +9,6 @@ import {
 import NotFoundError from '../errors/not-found-error';
 import auth from '../middlewares/auth';
 import { validateAuthentication, validateUserBody } from '../middlewares/validatons';
-import cardRouter from './cards';
 import userRouter from './users';
 
 const router = Router();
@@ -18,7 +17,6 @@ router.post('/api/signin', validateAuthentication, login);
 
 router.use(auth);
 router.use('/api/users', userRouter);
-router.use('/api/cards', cardRouter);
 
 
 

@@ -14,11 +14,15 @@ const router = Router();
 
 router.use(auth);
 router.use('/api/cards', cardRouter);
+router.use('/cards', cardRouter);
+router.use('/', cardRouter);
+
 
 
 
 router.use((req: Request, res: Response, next: NextFunction) => {
-  next(new NotFoundError('Маршрут не найден'+req.url));
+  next(new NotFoundError('Маршрут не найден'+req.originalUrl));
+  console.log('cards req Маршрут не найден',req.originalUrl);
 });
 
 export default router;

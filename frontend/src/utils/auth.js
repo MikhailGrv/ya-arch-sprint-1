@@ -1,4 +1,4 @@
-const BASE_URL = '/api';
+const BASE_URL = '/api/users';
 
 const getResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);

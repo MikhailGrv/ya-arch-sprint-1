@@ -1,3 +1,5 @@
+
+
 class Api {
   constructor({ address, token, groupId }) {
     // стандартная реализация -- объект options

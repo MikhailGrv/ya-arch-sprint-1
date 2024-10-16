@@ -8,7 +8,18 @@ interface JwtPayload {
 }
 
 const auth = (req: Request, res: Response, next: NextFunction) => {
-  const token = req.cookies.jwt;
+  var token = req.cookies.jwt;
+  console.log('users auth coockie jwt', req.cookies.jwt)
+  console.log('users auth headers authorization', req.headers.authorization);
+  if(req.headers.authorization) {
+    console.log('users auth headers authorization jwt', req.headers.authorization?.substring(7, req.headers.authorization?.length));
+
+    if(!token && req.headers.authorization?.startsWith('Bearer'))
+      token = req.headers.authorization?.substring(7, req.headers.authorization.length);
+    else if(!token && req.headers.authorization)
+      token = req.headers.authorization;
+  }
+  console.log('users auth token', token)
   let payload: JwtPayload | null = null;
   try {
     payload = jwt.verify(token, JWT_SECRET) as JwtPayload;

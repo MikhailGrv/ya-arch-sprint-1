@@ -1,11 +1,12 @@
-const BASE_URL = '/api/users';
+const BASE_URL = '/api/auth';
+const BASE_URL_users = '/api/users';
 
 const getResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
 }
 
 export const register = (email, password) => {
-  return fetch(`${BASE_URL}/signup`, {
+  return fetch(`${BASE_URL_users}/signup`, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -31,12 +32,16 @@ export const login = (email, password) => {
   })
   .then(getResponse)
   .then((data) => {
-    localStorage.setItem('jwt', data.token)
+    localStorage.setItem('jwt', data.token);
+    console.log('login jwt',data);
+    console.log('login jwt',data.token);
     return data;
   })
 };
 export const checkToken = (token) => {
-  return fetch(`${BASE_URL}/users/me`, {
+  console.log('checkToken jwt',token);
+
+  return fetch(`${BASE_URL_users}/me`, {
     method: 'GET',
     headers: {
       'Accept': 'application/json',

@@ -49,6 +49,7 @@ class Api {
   }
 
   getUserInfo() {
+    console.log('getUserInfo jwt', this._token);
     return fetch(`${this._address}/users/me`, {
       headers: {
         authorization: this._token,
@@ -102,7 +103,7 @@ class Api {
 const api = new Api({
   address: '/api',
   groupId: '',
-  token: '80a75492-21c5-4330-a02f-308029e94b63',
+  token: '',
 });
 
 export default api;

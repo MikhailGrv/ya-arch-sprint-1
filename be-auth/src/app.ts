@@ -9,7 +9,7 @@ import { DB_ADDRESS } from './config';
 import errorHandler from './middlewares/error-handler';
 import routes from './routes';
 
-const { PORT = 8091 } = process.env;
+const { PORT = 8090 } = process.env;
 const app = express();
 mongoose.connect(DB_ADDRESS);
 
@@ -21,4 +21,4 @@ app.use(errors());
 app.use(errorHandler);
 
 // eslint-disable-next-line no-console
-app.listen(PORT, () => console.log(`be-users API server started at port ${PORT}`));
+app.listen(PORT, () => console.log(`be-auth API server started at port ${PORT}`));

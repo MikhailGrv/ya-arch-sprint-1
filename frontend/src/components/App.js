@@ -39,12 +39,16 @@ function App() {
 
   // Запрос к API за информацией о пользователе и массиве карточек выполняется единожды, при монтировании.
   React.useEffect(() => {
+    const token = localStorage.getItem("jwt");
+    console.log('mount1 app jwt',token);
+    api._token = token;
     api
+          
       .getAppInfo()
       .then(([cardData, userData]) => {
         setCurrentUser(userData.data);
         setCards(cardData.data);
-       // console.log('app setCards', cardData);
+        console.log('app setCards', cardData);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -52,6 +56,8 @@ function App() {
   // при монтировании App описан эффект, проверяющий наличие токена и его валидности
   React.useEffect(() => {
     const token = localStorage.getItem("jwt");
+    console.log('mount2 app jwt',token);
+    api._token = token;
     if (token) {
       auth
         .checkToken(token)
@@ -95,7 +101,7 @@ function App() {
     api
       .setUserInfo(userUpdate)
       .then((newUserData) => {
-        setCurrentUser(newUserData);
+        setCurrentUser(newUserData.data);
         closeAllPopups();
       })
       .catch((err) => console.log(err));

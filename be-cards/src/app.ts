@@ -21,4 +21,4 @@ app.use(errors());
 app.use(errorHandler);
 
 // eslint-disable-next-line no-console
-app.listen(PORT, () => console.log(`API server started at port ${PORT}`));
+app.listen(PORT, () => console.log(`be-cards API server started at port ${PORT}`));

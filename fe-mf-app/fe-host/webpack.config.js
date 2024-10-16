@@ -57,6 +57,10 @@ module.exports = (_, argv) => ({
           loader: "babel-loader",
         },
       },
+      {
+          test: /\.(png|jp(e*)g|svg|gif)$/,
+          type: "asset/resource",
+      },
     ],
   },
 
@@ -64,7 +68,9 @@ module.exports = (_, argv) => ({
     new ModuleFederationPlugin({
       name: "fe_host",
       filename: "remoteEntry.js",
-      remotes: {},
+      remotes: {
+        'fe_users': 'fe_users@/fe-users/remoteEntry.js',
+      },
       exposes: {},
       shared: {
         ...deps,

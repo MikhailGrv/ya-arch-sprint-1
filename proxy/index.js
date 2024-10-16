@@ -33,15 +33,29 @@ const beCardsProxy = createProxyMiddleware({
    // pathRewrite: {'^/' : '/cards/'},
     changeOrigin: true, // needed for virtual hosted sites
 });
+
 const feProxy = createProxyMiddleware({
     target: 'http://localhost:8081', // target host with the same base path
     
     changeOrigin: true, // needed for virtual hosted sites
 });
+const feMFProxy = createProxyMiddleware({
+  target: 'http://localhost:8095', // target host with the same base path
+  
+  changeOrigin: true, // needed for virtual hosted sites
+});
+const feMF_usersProxy = createProxyMiddleware({
+  target: 'http://localhost:8096', // target host with the same base path
+  
+  changeOrigin: true, // needed for virtual hosted sites
+});
+
 
 // mount `exampleProxy` in web server
 app.use('/api/users', beUsersProxy);
 app.use('/api/cards', beCardsProxy);
 app.use('/api/auth', beAuthProxy);
-app.use('/', feProxy);
+app.use('/fe-users', feMF_usersProxy);
+app.use('/', feMFProxy);
+
 app.listen(PORT, () => console.log(`Proxy API server started at port ${PORT}`));

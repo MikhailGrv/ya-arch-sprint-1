@@ -57,6 +57,10 @@ module.exports = (_, argv) => ({
           loader: "babel-loader",
         },
       },
+      {
+        test: /\.(png|jp(e*)g|svg|gif)$/,
+        type: "asset/resource",
+      },
     ],
   },
 
@@ -65,7 +69,10 @@ module.exports = (_, argv) => ({
       name: "fe_cards",
       filename: "remoteEntry.js",
       remotes: {},
-      exposes: {},
+      exposes: {
+        './Card':'./src/components/Card.js',
+
+      },
       shared: {
         ...deps,
         react: {

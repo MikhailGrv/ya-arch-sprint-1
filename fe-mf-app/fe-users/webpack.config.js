@@ -57,6 +57,10 @@ module.exports = (_, argv) => ({
           loader: "babel-loader",
         },
       },
+      {
+        test: /\.(png|jp(e*)g|svg|gif)$/,
+        type: "asset/resource",
+    },
     ],
   },
 
@@ -65,7 +69,12 @@ module.exports = (_, argv) => ({
       name: "fe_users",
       filename: "remoteEntry.js",
       remotes: {},
-      exposes: {},
+      exposes: {
+        './EditProfilePopup':'./src/components/EditProfilePopup.js',
+        './EditAvatarPopup':'./src/components/EditAvatarPopup.js',
+        './Profile':'./src/components/Profile.js',
+        './Register':'./src/components/Register.js',
+      },
       shared: {
         ...deps,
         react: {

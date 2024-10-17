@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useState, useEffect }  from "react";
-import Card from './Card';
+//import Card from './Card';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 const Profile = lazy(() => import('fe_users/Profile').then((res)=>{
@@ -10,9 +10,18 @@ const Profile = lazy(() => import('fe_users/Profile').then((res)=>{
   return { default: () => <div className='error'>Component Profile is not available!</div> };
 }));
 
+const Cards = lazy(() => import('fe_cards/Cards').then((res)=>{
+  console.log('fe_cards/Cards ok');
+  return res;
+}).catch((ex) => {
+  console.log('fe_cards/Cardsfail', ex);
+  return { default: () => <div className='error'>Component Card is not available!</div> };
+}));
 
 
-function Main({ cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, onCardDelete,closeAllPopups ,setCurrentUser }) {
+
+
+function Main({  onEditProfile,onEditAvatar ,closeAllPopups ,setCurrentUser }) {
   const currentUser = React.useContext(CurrentUserContext);
   console.log('Main currentUser', currentUser);
   const imageStyle = { backgroundImage: `url(${currentUser.avatar})` };
@@ -30,7 +39,6 @@ function Main({ cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onC
       <Profile
       currentUser = {currentUser}
         onEditProfile = {onEditProfile}
-        onAddPlace = {onAddPlace}
         onEditAvatar = {onEditAvatar}
         closeAllPopups={closeAllPopups}
         setCurrentUser = {setCurrentUser}
@@ -38,12 +46,18 @@ function Main({ cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onC
       </Suspense>
       
       </section>
-      <section className="places page__section">
+      <Suspense>
+      <Cards
+               currentUser = {currentUser}
+      />
+      </Suspense>
+      {/* <section className="places page__section">
         <ul className="places__list">
           {
               cards.map((card) => (
-            
+                <Suspense>
             <Card
+               currentUser = {currentUser}
             key={card._id}
             card={card}
             onCardClick={onCardClick}
@@ -51,10 +65,11 @@ function Main({ cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onC
             onCardDelete={onCardDelete}
             
             />
+            </Suspense>
           ))
         }
         </ul>
-      </section>
+      </section> */}
     </main>
   );
 }

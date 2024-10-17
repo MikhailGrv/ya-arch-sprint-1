@@ -11,7 +11,7 @@ class Api {
   }
 
   getAppInfo() {
-    return Promise.all([this.getCardList(), this.getUserInfo()]);
+    return Promise.all([this.getCardList()]);
   }
 
   getCardList() {
@@ -44,45 +44,6 @@ class Api {
       headers: {
         authorization: this._token,
       },
-    })
-      .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`));
-  }
-
-  getUserInfo() {
-    console.log('getUserInfo jwt', this._token);
-    return fetch(`${this._address}/users/me`, {
-      headers: {
-        authorization: this._token,
-      },
-    })
-      .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`));
-  }
-
-  setUserInfo({ name, about }) {
-    return fetch(`${this._address}/users/me`, {
-      method: 'PATCH',
-      headers: {
-        authorization: this._token,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name,
-        about,
-      }),
-    })
-      .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`));
-  }
-
-  setUserAvatar({ avatar }) {
-    return fetch(`${this._address}/users/me/avatar`, {
-      method: 'PATCH',
-      headers: {
-        authorization: this._token,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        avatar,
-      }),
     })
       .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`));
   }

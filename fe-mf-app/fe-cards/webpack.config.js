@@ -70,7 +70,7 @@ module.exports = (_, argv) => ({
       filename: "remoteEntry.js",
       remotes: {},
       exposes: {
-        './Card':'./src/components/Card.js',
+        './Cards':'./src/components/Cards.js',
 
       },
       shared: {

@@ -3,13 +3,13 @@ import { Route, useHistory, Switch } from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
-import PopupWithForm from "./PopupWithForm";
-import ImagePopup from "./ImagePopup";
+//import PopupWithForm from "./PopupWithForm";
+//import ImagePopup from "./ImagePopup";
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 //import EditProfilePopup from "./EditProfilePopup";
 //import EditAvatarPopup from "./EditAvatarPopup";
-import AddPlacePopup from "./AddPlacePopup";
+//import AddPlacePopup from "./AddPlacePopup";
 //import Register from "./Register";
 import Login from "./Login";
 import InfoTooltip from "./InfoTooltip";
@@ -31,10 +31,10 @@ function App() {
 
 
 
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  
  
-  const [selectedCard, setSelectedCard] = React.useState(null);
-  const [cards, setCards] = React.useState([]);
+  
+
 
   // В корневом компоненте App создана стейт-переменная currentUser. Она используется в качестве значения для провайдера контекста.
   const [currentUser, setCurrentUser] = React.useState({});
@@ -58,7 +58,7 @@ function App() {
       .getAppInfo()
       .then(([cardData, userData]) => {
         setCurrentUser(userData.data);
-        setCards(cardData.data);
+       // setCards(cardData.data);
         console.log('app setCards', cardData);
       })
       .catch((err) => console.log(err));
@@ -86,9 +86,6 @@ function App() {
 
 
 
-  function handleAddPlaceClick() {
-    setIsAddPlacePopupOpen(true);
-  }
 
 
   function closeAllPopups() {
@@ -99,42 +96,8 @@ function App() {
     // setSelectedCard(null);
   }
 
-  function handleCardClick(card) {
-    setSelectedCard(card);
-  }
 
-
-  function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i === currentUser._id);
-    api
-      .changeLikeCardStatus(card._id, !isLiked)
-      .then((newCard) => {
-        setCards((cards) =>
-          cards.map((c) => (c._id === card._id ? newCard.data : c))
-        );
-      })
-      .catch((err) => console.log(err));
-  }
-
-  function handleCardDelete(card) {
-    api
-      .removeCard(card._id)
-      .then(() => {
-        setCards((cards) => cards.filter((c) => c._id !== card._id));
-      })
-      .catch((err) => console.log(err));
-  }
-
-  function handleAddPlaceSubmit(newCard) {
-    api
-      .addCard(newCard)
-      .then((newCardFull) => {
-        setCards([newCardFull.data, ...cards]);
-        closeAllPopups();
-      })
-      .catch((err) => console.log(err));
-  }
-
+ 
   function onRegister({ email, password }) {
     auth
       .register(email, password)
@@ -185,13 +148,7 @@ function App() {
             exact
             path="/"
             component={Main}
-            cards={cards}
             
-            onAddPlace={handleAddPlaceClick}
-            
-            onCardClick={handleCardClick}
-            onCardLike={handleCardLike}
-            onCardDelete={handleCardDelete}
             closeAllPopups={closeAllPopups}
             loggedIn={isLoggedIn}
             setCurrentUser={onSetCurrentUser}
@@ -205,14 +162,8 @@ function App() {
         </Switch>
         <Footer />
         
-        <AddPlacePopup
-          isOpen={isAddPlacePopupOpen}
-          onAddPlace={handleAddPlaceSubmit}
-          onClose={closeAllPopups}
-        />
-        <PopupWithForm title="Вы уверены?" name="remove-card" buttonText="Да" />
-      
-        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+       
+        
         <InfoTooltip
           isOpen={isInfoToolTipOpen}
           onClose={closeAllPopups}

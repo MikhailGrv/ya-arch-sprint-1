@@ -19,8 +19,23 @@ const EditAvatarPopup = lazy(() => import('./EditAvatarPopup.js').then((res)=>{
 
 
 
-export default function Profile({currentUser, setCurrentUser, onAddPlace}) {
+export default function Profile() {
   //const [curUser, setCurrentUser] = React.useState({});
+  const [currentUser, setCurrentUser] = React.useState({});
+  React.useEffect(() => {
+    const token = localStorage.getItem("jwt");
+    console.log('mount1 app jwt',token);
+    api._token = token;
+    api
+          
+      .getAppInfo()
+      .then(([userData]) => {
+        setCurrentUser(userData.data);
+        console.log('Profile app userData', userData);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   console.log('Profile currentUser', currentUser);
   const imageStyle = { backgroundImage: `url(${currentUser.avatar})` };
   //setCurrentUser(currentUser);
@@ -77,7 +92,7 @@ export default function Profile({currentUser, setCurrentUser, onAddPlace}) {
           <button className="profile__edit-button" type="button" onClick={handleEditProfileClick}></button>
           <p className="profile__description">{currentUser.about}</p>
         </div>
-        <button className="profile__add-button" type="button" onClick={onAddPlace}></button>
+        
       </section>
      <Suspense>
      <EditProfilePopup

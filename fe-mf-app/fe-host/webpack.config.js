@@ -70,6 +70,7 @@ module.exports = (_, argv) => ({
       filename: "remoteEntry.js",
       remotes: {
         'fe_users': 'fe_users@/fe-users/remoteEntry.js',
+        'fe_cards': 'fe_cards@/fe-cards/remoteEntry.js',
       },
       exposes: {},
       shared: {
